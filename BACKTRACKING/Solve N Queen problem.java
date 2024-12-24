@@ -1,47 +1,45 @@
 import java.util.ArrayList;
 
-class Result 
-{
+class Result {
     // Function to check if placing a queen at board[row][col] is safe
-    int isSafe(int board[][], int row, int col, int N) 
-    { 
+    boolean isSafe(int board[][], int row, int col, int N) {
         // Check the row to the left
         for (int i = 0; i < col; i++) {
             if (board[row][i] == 1) {
-                return 0;
+                return false;
             }
         }
 
         // Check the upper diagonal on the left
         for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
             if (board[i][j] == 1) {
-                return 0;
+                return false;
             }
         }
 
         // Check the lower diagonal on the left
         for (int i = row, j = col; i < N && j >= 0; i++, j--) {
             if (board[i][j] == 1) {
-                return 0;
+                return false;
             }
         }
 
-        return 1; // Safe to place the queen
-    } 
+        return true; // Safe to place the queen
+    }
 
     // Utility function to solve the N-Queens problem
-    boolean solveNQUtil(int board[][], int col, int N, ArrayList<ArrayList<Integer>> sol)
-    {
+    boolean solveNQUtil(int board[][], int col, int N, ArrayList<ArrayList<Integer>> sol) {
         // Base case: If all queens are placed
         if (col >= N) {
-            // Save the solution
-            ArrayList<Integer> currentSol = new ArrayList<>();
+            ArrayList<Integer> currentSolution = new ArrayList<>();
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    currentSol.add(board[i][j]);
+                    if (board[i][j] == 1) {
+                        currentSolution.add(j);
+                    }
                 }
             }
-            sol.add(currentSol);
+            sol.add(currentSolution);
             return true;
         }
 
@@ -50,7 +48,7 @@ class Result
         // Consider each row in the current column
         for (int i = 0; i < N; i++) {
             // Check if it's safe to place the queen
-            if (isSafe(board, i, col, N) == 1) {
+            if (isSafe(board, i, col, N)) {
                 // Place the queen
                 board[i][col] = 1;
 
@@ -63,5 +61,16 @@ class Result
         }
 
         return res;
-    } 
+    }
+
+    // Main function to solve the problem
+    public ArrayList<ArrayList<Integer>> solveNQueens(int N) {
+        int board[][] = new int[N][N];
+        ArrayList<ArrayList<Integer>> solutions = new ArrayList<>();
+        solveNQUtil(board, 0, N, solutions);
+        return solutions;
+    }
+
+    
+    
 }
