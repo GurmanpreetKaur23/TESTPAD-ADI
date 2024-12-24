@@ -62,15 +62,4 @@ class Result {
 
         return res;
     }
-
-    // Main function to solve the problem
-    public ArrayList<ArrayList<Integer>> solveNQueens(int N) {
-        int board[][] = new int[N][N];
-        ArrayList<ArrayList<Integer>> solutions = new ArrayList<>();
-        solveNQUtil(board, 0, N, solutions);
-        return solutions;
-    }
-
-    
-    
 }
